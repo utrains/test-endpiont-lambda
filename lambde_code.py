@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     region="ca-central-1"
     senderemail="tatahnoellimnyuy@gmail.com"
     receiveremail="noel.tatah@utrains.org"
-    S3bucket="project4-static"
+    S3bucket="website-endpoints/project4-static"
     websiteFile="websites.txt"
     sites=get_bucket_data(S3bucket,websiteFile)
     if is_verified_email(senderemail,receiveremail):
