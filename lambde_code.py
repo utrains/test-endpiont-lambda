@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     senderemail="enter sender email"
     receiveremail="enter receiver email"
     S3bucket="enter s3 bucketname"
-    websiteFile="website-endpoints/websites.txt"
+    websiteFile="websites.txt"
     sites=get_bucket_data(S3bucket,websiteFile)
     if is_verified_email(senderemail,receiveremail):
         for site in sites:
