@@ -58,7 +58,7 @@ def is_verified_email(sender_email_address,receiver_email_address):
         #send_plain_email(sender_email_address,receiver_email_address,subject,message)
     else:
         # sends sends verification emails to the unverified email.
-        unverified_emails=list(set(verified_emails)-set(setemail))
+        unverified_emails=list(set(setemail)- set(setemail).intersection(set(verified_emails)))
         print(unverified_emails)
         for email in unverified_emails:
             verify_email(email)
