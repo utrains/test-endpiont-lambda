@@ -1,7 +1,6 @@
 import json
 import boto3
 import socket
-import boto3
 
 def lambda_handler(event, context):
     #calling the function with websites
@@ -87,8 +86,19 @@ def get_bucket_data(bucketName,bucketObject):
 def send_plain_email(sender,receiver,subject,message,region):
     ses_client = boto3.client("ses", region_name=region)
     CHARSET = "UTF-8"
-
     try:
+        response = ses_client.create_configuration_set(
+            ConfigurationSet={
+                'Name': 'my-config-set'
+            }
+        )   
+    except ses_client.exceptions.ConfigurationSetAlreadyExistsException as e:
+        print('The configuration set already exists')
+    else:    
+        print(f'Configuration set creation error !!! Please check your configuration set')
+    
+    try:
+        
         response = ses_client.send_email(
             Destination={
                 "ToAddresses": [
@@ -108,6 +118,11 @@ def send_plain_email(sender,receiver,subject,message,region):
                 },
             },
             Source=sender,
+            ConfigurationSetName='my-config-set',
         )   
+    
     except Exception as e:
-        print('Error message: {e}')
+        print(e.response['Error']['Message'])
+    else:
+        print(f"Email sent! Message ID: {response['MessageId']}")
+    
