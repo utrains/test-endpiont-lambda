@@ -88,23 +88,26 @@ def send_plain_email(sender,receiver,subject,message,region):
     ses_client = boto3.client("ses", region_name=region)
     CHARSET = "UTF-8"
 
-    response = ses_client.send_email(
-        Destination={
-            "ToAddresses": [
-                receiver,
-            ],
-        },
-        Message={
-            "Body": {
-                "Text": {
+    try:
+        response = ses_client.send_email(
+            Destination={
+                "ToAddresses": [
+                    receiver,
+                ],
+            },
+            Message={
+                "Body": {
+                    "Text": {
+                        "Charset": CHARSET,
+                        "Data": message,
+                    }
+                },
+                "Subject": {
                     "Charset": CHARSET,
-                    "Data": message,
-                }
+                    "Data":subject,
+                },
             },
-            "Subject": {
-                "Charset": CHARSET,
-                "Data":subject,
-            },
-        },
-        Source=sender,
-    )   
+            Source=sender,
+        )   
+    except Exception as e:
+        print('Error message: {e}')
