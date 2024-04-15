@@ -92,9 +92,10 @@ def send_plain_email(sender,receiver,subject,message,region):
                 'Name': 'my-config-set'
             }
         )   
-    except ses_client.exceptions.ConfigurationSetAlreadyExistsException as e:
-        print('The configuration set already exists')
-    else:    
+    except Exception as e:
+        print('Configuration set exists: ' + e.response['Error']['Message'])
+
+    else:
         print(f'Configuration set creation error !!! Please check your configuration set')
     
     try:
