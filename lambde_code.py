@@ -4,7 +4,7 @@ import socket
 
 def lambda_handler(event, context):
     #calling the function with websites
-    region="ca-central-1"
+    region="us-east-1"
     senderemail="enter sender email"
     receiveremail="enter receiver email"
     S3bucket="enter s3 bucketname"
